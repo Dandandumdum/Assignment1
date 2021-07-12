@@ -1,6 +1,6 @@
 package attributes;
 
-public class PrimaryAttributes {
+public abstract class PrimaryAttributes {
     private int strength;
     private int dexterity;
     private int intelligence;

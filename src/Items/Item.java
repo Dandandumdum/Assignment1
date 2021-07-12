@@ -1,6 +1,6 @@
 package Items;
 
-public abstract class Item{ //Make enum with stats
+public abstract class Item{
         private String name;
         private Slot slot;
         private int levelRequired;
@@ -12,8 +12,8 @@ public abstract class Item{ //Make enum with stats
             this.setSlot(slot);
         }
         public Item(){//Blank constructor
-
         }
+
     public String getName() {
         return name;
     }

@@ -1,5 +1,6 @@
 package Items;
 
+
 public class Armor extends Item{//Give armor as an object to equip
     private ArmorType armorType;
 
@@ -7,6 +8,7 @@ public class Armor extends Item{//Give armor as an object to equip
         super(name, levelRequired, slot);
         this.setArmorType(type);
     }
+
 
     public Armor() {//Blank constructor
         super();

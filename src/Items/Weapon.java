@@ -1,17 +1,23 @@
 package Items;
 
-public class Weapon extends Item{
+public class Weapon extends Item {
 
     private WeaponType weaponType;
-    private int damage;
+    private double damage;
     private double attackSpeed;
+    private double dps;
 
 
-    public Weapon(String name, int levelRequired, Slot slot ,WeaponType type, int dmg, int atkSpd) {
+    public Weapon(String name, int levelRequired, Slot slot ,WeaponType type, double dmg, double atkSpd, double dps) {
         super(name,levelRequired ,slot);
         this.setWeaponType(type);
         this.setDamage(dmg);
         this.setAttackSpeed(atkSpd);
+        this.setDps(dps);
+    }
+    public Weapon(){//Blank Constructor
+        super();
+
     }
 
     public WeaponType getWeaponType() {
@@ -22,11 +28,11 @@ public class Weapon extends Item{
         this.weaponType = weaponType;
     }
 
-    public int getDamage() {
+    public double getDamage() {
         return damage;
     }
 
-    public void setDamage(int damage) {
+    public void setDamage(double damage) {
         this.damage = damage;
     }
 
@@ -38,5 +44,11 @@ public class Weapon extends Item{
         this.attackSpeed = attackSpeed;
     }
 
+    public double getDps() {
+        return (getDamage()*getAttackSpeed());
+    }
 
+    public void setDps(double dps) {
+        this.dps = (getDamage()*getAttackSpeed());
+    }
 }
