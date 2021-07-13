@@ -13,15 +13,17 @@ public class Weapon extends Item {
         this.setWeaponType(type);
         this.setDamage(dmg);
         this.setAttackSpeed(atkSpd);
-        this.setDamagePerSecond(this.getDamage(),this.getAttackSpeed());
+        this.setDamagePerSecond(getDamage(),getAttackSpeed());
 
     }
     public Weapon(){//Blank Constructor
-        super();
+        /*super();
         this.setWeaponType(WeaponType.NONE);
-        this.setDamage(1);
+        this.setDamage(5);
         this.setAttackSpeed(1);
         this.setDamagePerSecond(getDamage(),getAttackSpeed());
+
+         */
     }
     public String toString(){
         return "Name: "+getName() +" Level Required: "+ getLevelRequired() + " Weapon Type: "+getWeaponType() + " DPS: " + getDamagePerSecond() ;
