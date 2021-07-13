@@ -14,84 +14,120 @@ public class Character { //Initializes a character (Class type, level, equipment
     private Armor head; //must have armor not armor type
     private Armor legs;
     private Armor body;
-    private int totalPrimaryAttributes;
     private double characterDps;
+    private double characterDamageBonus;
+    HashMap<Slot, Armor> equippedArmor = new HashMap<Slot, Armor>();
+    HashMap<Slot, Weapon> equippedWeapon = new HashMap();
     //Have items equipped here, as custom type?
 
         public Character(){
         }
 
-        public Character(RpgClassType rpgClassType, int level, Weapon weapon, Armor head, Armor body, Armor legs,
-                         double characterDps  ){
+        public Character(RpgClassType rpgClassType, int level){
         this.setPlayerClass(rpgClassType);
         this.setLevel(level); //Initializing character at level 1 unless stated otherwise
-        this.setWeapon(weapon);
-        this.setHead(head);
-        this.setBody(body);
-        this.setLegs(legs);
-        this.setCharacterDps(characterDps);
-
-
+        this.setCharacterDps(getPrimary().getTotalPrimaryAttributes(), equippedWeapon.get(Slot.WEAPON).getDamagePerSecond());
+        this.setCharacterDamageBonus(getPlayerClass());
 
     }
     //Initializes Attributes at lvl One based upon character rpg class
-    //PrimaryAttributes WARRIOR = new PrimaryAttributes(5,2,1,10); Not required if i make Primary an interface?
-    SecondaryAttributes WARRIOR = new SecondaryAttributes(5,2,1,10,1,1,1);
-    SecondaryAttributes MAGE = new SecondaryAttributes(1,1,8,5,1,1,1);
-    SecondaryAttributes RANGER = new SecondaryAttributes(1,7,1,8,0,0,0);
-    SecondaryAttributes ROUGE = new SecondaryAttributes(2,6,1,8,0,0,0);
 
+    PrimaryAttributes WARRIOR = new PrimaryAttributes(5,2,1,10);
+    PrimaryAttributes MAGE = new  PrimaryAttributes(1,1,8,5);
+    PrimaryAttributes RANGER = new  PrimaryAttributes(1,7,1,8);
+    PrimaryAttributes ROUGE = new  PrimaryAttributes(2,6,1,8);
+    SecondaryAttributes WARRIORSEC = new SecondaryAttributes(WARRIOR.getStrength(), WARRIOR.getDexterity(), WARRIOR.getIntelligence(),
+                                                                WARRIOR.getVitality(), WARRIOR.getVitality()*10,WARRIOR.getStrength() + WARRIOR.getDexterity(),
+                                                                 WARRIOR.getIntelligence());
+    SecondaryAttributes MAGESEC = new SecondaryAttributes(MAGE.getStrength(), MAGE.getDexterity(),MAGE.getIntelligence(), MAGE.getVitality(),
+                                                                MAGE.getVitality()*10, MAGE.getStrength() + MAGE.getDexterity(), MAGE.getIntelligence());
+    SecondaryAttributes RANGERSEC = new SecondaryAttributes(RANGER.getStrength(), RANGER.getDexterity(), RANGER.getIntelligence(), ROUGE.getVitality(),
+                                                                RANGER.getVitality()*10, RANGER.getStrength() + RANGER.getDexterity(), RANGER.getVitality());
+    SecondaryAttributes ROUGESEC = new SecondaryAttributes(ROUGE.getStrength(), ROUGE.getDexterity(), ROUGE.getIntelligence(), ROUGE.getVitality(), ROUGE.getVitality()*10,
+                                                                 ROUGE.getStrength() + ROUGE.getDexterity(), ROUGE.getIntelligence());
     public String attributesToString(){// use string builder instead
-        System.out.println("Strength: " + getSecondary().getStrength() +" Dexterity: " + getSecondary().getDexterity()
-                +" Intelligence: "+ getSecondary().getIntelligence() +" Vitality: "+ getSecondary().getVitality() +
-                " Health: "+ getSecondary().getHealth() +" Armor Rating: "+ getSecondary().getArmorRating()
-                +" Elemental Resistance: " +getSecondary().getElementalResistance() );
+        return "Strength: " + getPrimary().getStrength() +" Dexterity: " + getPrimary().getDexterity()
+                +" Intelligence: "+ getPrimary().getIntelligence() +" Vitality: "+ getPrimary().getVitality() +
+                " Health: "
+                + getSecondary().getHealth() +" Armor Rating: "+ getSecondary().getArmorRating()
+                +" Elemental Resistance: " +getSecondary().getElementalResistance();
+    }
 
-        return "ATTRIBUTES";
-    }
-    public int getTotalPrimaryAttributes(){
-        int i = getSecondary().getStrength() + getSecondary().getDexterity()+ getSecondary().getIntelligence()
-                +getSecondary().getVitality();
-                return i;
-    }
-    public  void equipArmor(Slot slot, Armor armor) {
+
+    public  void equipArmor(Slot slot, Armor armor) { //Equips armor to specified slot on character, if allowed.
        try{
            if (armor.getLevelRequired() > getLevel()){
                System.out.println("Level Requirement too high.");
            }else{
-               HashMap<Slot, Armor> equippedArmor = new HashMap();
+
                if (slot == Slot.HEAD){
-                   setHead(armor);
+                   equippedArmor.put(Slot.HEAD, armor);
+                   setPrimary(new PrimaryAttributes((getPrimary().getStrength() + armor.getPrimary().getStrength()) ,
+                           (getPrimary().getDexterity() + armor.getPrimary().getDexterity()) ,
+                           (getPrimary().getIntelligence() + armor.getPrimary().getIntelligence()) ,
+                           (getPrimary().getVitality() + armor.getPrimary().getVitality())));
+
                }else if (slot == Slot.BODY){
-                   setBody(armor);
+                   equippedArmor.put(Slot.BODY, armor);
+                   setPrimary(new PrimaryAttributes((getPrimary().getStrength() + armor.getPrimary().getStrength()) ,
+                           (getPrimary().getDexterity() + armor.getPrimary().getDexterity()) ,
+                           (getPrimary().getIntelligence() + armor.getPrimary().getIntelligence()) ,
+                           (getPrimary().getVitality() + armor.getPrimary().getVitality())));
                }else if (slot == Slot.LEGS){
-                   setLegs(armor);
+                   equippedArmor.put(Slot.LEGS, armor);
+                   setPrimary(new PrimaryAttributes((getPrimary().getStrength() + armor.getPrimary().getStrength()) ,
+                           (getPrimary().getDexterity() + armor.getPrimary().getDexterity()) ,
+                           (getPrimary().getIntelligence() + armor.getPrimary().getIntelligence()) ,
+                           (getPrimary().getVitality() + armor.getPrimary().getVitality())));
                }else
-                   System.out.println("Armor cannot be place in that slot.");
+                   System.out.println("Armor cannot be placed in that slot.");
            }
-           //}catch (NullPointerException e){
+           }catch (NullPointerException e){
        }catch(InvalidArmorException e){
            System.out.println(e);
        }
 
     }
+    public void showArmor(Slot slot) {
+        try {
+            if (slot == Slot.HEAD) {
+                System.out.println(equippedArmor.get(Slot.HEAD).toString());
+            } else if (slot == Slot.BODY) {
+                System.out.println(equippedArmor.get(Slot.BODY).toString());
+            } else if (slot == Slot.LEGS) {
+                System.out.println(equippedArmor.get(Slot.LEGS).toString());
+            } else
+                System.out.println("Armor cannot be worn in that slot.");
+        } catch(NullPointerException e){
+            System.out.println(e);
+        }
+
+    }
+
     public  void equipWeapon(Slot slot, Weapon weapon) {
 
         try{
             if (weapon.getLevelRequired() > getLevel()){
                 System.out.println("Level Requirement too high.");
             }else{
-                HashMap<Slot, Weapon> equippedWeapon = new HashMap();
                 if (slot == Slot.WEAPON){
-                    setWeapon(weapon);
+                    equippedWeapon.put(Slot.WEAPON, weapon);
                 }else
                     System.out.println("Weapon cannot be place in that slot.");
-
             }
         //}catch (NullPointerException e){
         }catch(InvalidArmorException e){
             System.out.println(e);
         }
+    }
+    public void showWeapon(Slot slot){ //prints out information on the currently equipped weapon
+        if(equippedWeapon.get(Slot.WEAPON).equals(WeaponType.NONE)){
+            System.out.println("No weapon equipped.");
+        }else
+        if(slot == Slot.WEAPON){
+            System.out.println(equippedWeapon.get(Slot.WEAPON).toString());
+        }
+
     }
 
     public PrimaryAttributes getPrimary() {
@@ -141,9 +177,6 @@ public class Character { //Initializes a character (Class type, level, equipment
     }
 
     public void setHead(Armor head) {
-       /* if(  != Slot.HEAD){
-            System.out.println("Non-Head Item cannot be placed in this slot");
-        }else */
         this.head = head;
     }
 
@@ -163,20 +196,34 @@ public class Character { //Initializes a character (Class type, level, equipment
     public void setBody(Armor body) {
         this.body = body;
     }
-
-    public void setCharacterDps(double characterDps) {
-        this.setCharacterDps(characterDps);
-
+    public double getCharacterDps() {
+        return characterDps;
     }
 
-    public double getCharacterDps() {
-        if(Slot.WEAPON.equals(null)){ // hash map will help Slot.WEAPON == empty
+    public void setCharacterDps(double totalPrimary, double weaponDps) {
+        if(Slot.WEAPON.equals(WeaponType.NONE)){ // hash map will help Slot.WEAPON == empty
             this.characterDps = 1;
         }else{
-            this.characterDps = (1+(getTotalPrimaryAttributes()/100)) * getWeapon().getDps();
+            this.characterDps = (1+(totalPrimary/100) + characterDamageBonus) * weaponDps;
         }
-        return characterDps;
+    }
+
+    public double getCharacterDamageBonus() {
+        return characterDamageBonus;
+    }
+
+    public void setCharacterDamageBonus(RpgClassType rpgClass) {
+        if (rpgClass.equals(RpgClassType.WARRIOR)){
+            this.characterDamageBonus = Double.valueOf(getPrimary().getStrength())/100;
+        }else if (rpgClass.equals(RpgClassType.MAGE)){
+            this.characterDamageBonus = Double.valueOf(getPrimary().getIntelligence())/100;
+        }else if (rpgClass.equals(RpgClassType.RANGER)){
+            this.characterDamageBonus =Double.valueOf(getPrimary().getDexterity())/100;
+        }else if (rpgClass.equals(RpgClassType.ROGUE)){
+            this.characterDamageBonus =Double.valueOf(getPrimary().getDexterity())/100;
+        }
     }
 
 
 }
+

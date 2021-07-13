@@ -12,10 +12,13 @@ public class SecondaryAttributes extends PrimaryAttributes{ //Takes primary attr
         this.setElementalResistance(mgDef);
 
     }
+    public SecondaryAttributes(){
+
+    }
 
     public int getHealth() {
 
-        return health;
+        return health = getVitality()*10;
     }
 
     public void setHealth(int health) {
@@ -23,7 +26,7 @@ public class SecondaryAttributes extends PrimaryAttributes{ //Takes primary attr
     }
 
     public int getArmorRating() {
-        return armorRating;
+        return armorRating  = (getStrength() + getDexterity());
     }
 
     public void setArmorRating(int armorRating) {
@@ -31,7 +34,7 @@ public class SecondaryAttributes extends PrimaryAttributes{ //Takes primary attr
     }
 
     public int getElementalResistance() {
-        return elementalResistance;
+        return elementalResistance = getIntelligence();
     }
 
     public void setElementalResistance(int elementalResistance) {

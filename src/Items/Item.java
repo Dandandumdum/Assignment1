@@ -13,6 +13,9 @@ public abstract class Item{
         }
         public Item(){//Blank constructor
         }
+        public String toString(){
+            return null;
+        }
 
     public String getName() {
         return name;
