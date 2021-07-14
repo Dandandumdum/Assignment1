@@ -2,12 +2,11 @@ package attributes;
 
 public class RpgClass {
     private RpgClassType type;
-    private PrimaryAttributes primaryAttributes;
-    private SecondaryAttributes secondaryAttributes;
+    private PrimaryAttributes attributes;
 
-    public RpgClass(RpgClassType type, PrimaryAttributes primaryAttributes ,SecondaryAttributes secondaryAttributes){
+
+    public RpgClass(RpgClassType type, PrimaryAttributes attributes ){
         this.setType(type);
-        this.setSecondaryAttributes(secondaryAttributes);
 
     }
     public RpgClass(){
@@ -21,19 +20,5 @@ public class RpgClass {
         this.type = type;
     }
 
-    public SecondaryAttributes getSecondaryAttributes() {
-        return secondaryAttributes;
-    }
 
-    public void setSecondaryAttributes(SecondaryAttributes secondaryAttributes) {
-        this.secondaryAttributes = secondaryAttributes;
-    }
-
-    public PrimaryAttributes getPrimaryAttributes() {
-        return primaryAttributes;
-    }
-
-    public void setPrimaryAttributes(PrimaryAttributes primaryAttributes) {
-        this.primaryAttributes = primaryAttributes;
-    }
 }

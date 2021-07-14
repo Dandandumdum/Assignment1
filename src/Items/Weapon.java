@@ -13,20 +13,15 @@ public class Weapon extends Item {
         this.setWeaponType(type);
         this.setDamage(dmg);
         this.setAttackSpeed(atkSpd);
-        this.setDamagePerSecond(getDamage(),getAttackSpeed());
+        this.setDamagePerSecond(getDamage(), getAttackSpeed());
+
 
     }
     public Weapon(){//Blank Constructor
-        /*super();
-        this.setWeaponType(WeaponType.NONE);
-        this.setDamage(5);
-        this.setAttackSpeed(1);
-        this.setDamagePerSecond(getDamage(),getAttackSpeed());
 
-         */
     }
     public String toString(){
-        return "Name: "+getName() +" Level Required: "+ getLevelRequired() + " Weapon Type: "+getWeaponType() + " DPS: " + getDamagePerSecond() ;
+        return "Name: "+getName() +" Level Required: "+ getLevelRequired() + " Weapon Type: "+getWeaponType() + " DPS: " + getDamage()*getAttackSpeed() ;
     }
     public WeaponType getWeaponType() {
         return weaponType;
@@ -56,8 +51,8 @@ public class Weapon extends Item {
         return damagePerSecond;
                 //(getDamage()*getAttackSpeed());
     }
-
     public void setDamagePerSecond(double damage, double attackSpeed) {
-        this.damagePerSecond = damage*attackSpeed;
+
+        this.damagePerSecond = damage * attackSpeed;
     }
 }

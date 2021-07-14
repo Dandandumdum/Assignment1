@@ -9,12 +9,12 @@ public class Main {
     }
 
     public static void test(){
-        Armor testMailBody = new Armor();
-        testMailBody.setName("Shiny Mail Body Armor");
-        testMailBody.setLevelRequired(4);
-        testMailBody.setSlot(Slot.BODY);
-        testMailBody.setArmorType(ArmorType.MAIL);
-        testMailBody.setPrimary(new PrimaryAttributes(1,1,0,0));
+        Armor testPlateBody = new Armor();
+        testPlateBody.setName("Common Plate Body Armor");
+        testPlateBody.setLevelRequired(1);
+        testPlateBody.setSlot(Slot.BODY);
+        testPlateBody.setArmorType(ArmorType.PLATE);
+        testPlateBody.setPrimary(new PrimaryAttributes(1,0,0,2));
 
         Armor testClothHead = new Armor();
         testClothHead.setName("Common Mail Head Armor");
@@ -34,32 +34,32 @@ public class Main {
         //Setting values
         Character Neil = new Character();
         Neil.setPlayerClass(RpgClassType.WARRIOR);
-        Neil.setPrimary(Neil.WARRIOR);
-        Neil.setSecondary(Neil.WARRIORSEC);
-        Neil.setLevel(1);
+        Neil.classAttributes(RpgClassType.WARRIOR, 1);
         Neil.setCharacterDamageBonus(RpgClassType.WARRIOR);
         Neil.equipArmor(Slot.HEAD, testClothHead);
-        Neil.equipArmor(Slot.BODY, testMailBody);
+        Neil.equipArmor(Slot.BODY, testPlateBody);
         Neil.equipWeapon(Slot.WEAPON, testAxe);
 
 
         //Getting Values
-        try{
+
             System.out.println(Neil.getPlayerClass());
+            Neil.levelUp(RpgClassType.WARRIOR, 1);
             System.out.println("=============================");
             System.out.println(Neil.attributesToString());
-            Neil.levelUp(RpgClassType.WARRIOR);
+            Neil.levelUp(RpgClassType.WARRIOR, 1);
+            System.out.println("=============================");
+            System.out.println(Neil.attributesToString());
+            System.out.println(Neil.getCharacterDamageBonus());
             Neil.showArmor(Slot.HEAD);
             System.out.println("Character DPS: " + Neil.getCharacterDps());
-            System.out.println(Neil.getWeaponDps());
+            Neil.showWeapon(Slot.WEAPON);
 
 
            // Character John = new Character(RpgClassType.ROGUE, 3);
 
 
       //  }catch (NullPointerException e){System.out.println(e);
-        }catch(InvalidArmorException e){
-            System.out.println(e);
-        }
+
     }
 }

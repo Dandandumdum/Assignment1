@@ -18,6 +18,7 @@ public class PrimaryAttributes {
         this.setTotalPrimaryAttributes(getStrength(), getDexterity(),getIntelligence(),getVitality());
     }
 
+
     public int getStrength() {
         return strength;
     }

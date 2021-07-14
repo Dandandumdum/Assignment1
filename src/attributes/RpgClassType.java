@@ -6,6 +6,5 @@ public enum RpgClassType {
     RANGER,
     ROGUE,
     WARRIOR,
-    WARRIORSEC;
 
 }
