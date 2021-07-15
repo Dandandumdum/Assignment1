@@ -6,8 +6,9 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ItemTest {
+class ItemTest {//Tests based upon the items a player character can equip, and whether or not that instance of a player may equip them.
     @Test void tooHighLevelWeaponEquip_level1PlayerLevel2Weapon_true(){
+        //Creating a new instance of a weapon of weaponType AXE, name "Test Axe", slot Slot.Weapon, damage 20, attackSpeed 0.5, and level required 2.
         Weapon testAxe = new Weapon();
         testAxe.setName("Test Axe");
         testAxe.setLevelRequired(2);
@@ -15,7 +16,7 @@ class ItemTest {
         testAxe.setWeaponType(WeaponType.AXE);
         testAxe.setDamage(20);
         testAxe.setAttackSpeed(0.5);
-
+        //Creating an instance of a character "itemChecker" of playerClass WARRIOR, starting at level 1. Used to test item functionality.
         var itemChecker = new Character();
         itemChecker.setPlayerClass(RpgClassType.WARRIOR);
         itemChecker.classAttributes(RpgClassType.WARRIOR, 1);
@@ -25,6 +26,7 @@ class ItemTest {
 
 
     }@Test void tooHighLevelArmorEquip_level1PlayerLevel2Armor_true(){
+        //Creating a new instance of armor of armorType Plate, name "Common Plate Body Armor", level required 2, slot Slot.BODY, and with primary attributes (str 1, dex 0, intl, 0, vit 2).
         Armor testPlateBody = new Armor();
         testPlateBody.setName("Common Plate Body Armor");
         testPlateBody.setLevelRequired(2);

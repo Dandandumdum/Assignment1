@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class CharacterTest {
+    //Tests based upon the leveling systems and how attributes are altered based upon the levels gained, or the current player character's class.
     @Test
     void isLevelOne_levelOne_true(){
         var levelOneChecker = new Character();
@@ -11,6 +12,7 @@ class CharacterTest {
     }
     @Test
     void levelUpTo2_levelOneToLevelTwo_true(){
+        //Creating an instance of a character "levelUpChecker" of playerClass WARRIOR, starting at level 1. Used to test character systems functionality.
         var levelUpChecker = new Character();
         levelUpChecker.setPlayerClass(RpgClassType.WARRIOR);
         levelUpChecker.classAttributes(RpgClassType.WARRIOR, 1);
@@ -29,6 +31,7 @@ class CharacterTest {
     }
     @Test
     void warriorDefaultAttributes_levelOne_true(){
+        //Creating an instance of a character "attributeChecker" of playerClass WARRIOR, starting at level 1. Used to test character systems functionality.
         var attributeChecker = new Character();
         attributeChecker.setPlayerClass(RpgClassType.WARRIOR);
         attributeChecker.classAttributes(RpgClassType.WARRIOR, 1);
@@ -40,6 +43,7 @@ class CharacterTest {
     }
     @Test
     void mageDefaultAttributes_levelOne_true(){
+        //Creating an instance of a character "attributeChecker" of playerClass MAGE, starting at level 1. Used to test character systems functionality.
         var attributeChecker = new Character();
         attributeChecker.setPlayerClass(RpgClassType.MAGE);
         attributeChecker.classAttributes(RpgClassType.MAGE, 1);
@@ -51,6 +55,7 @@ class CharacterTest {
     }
     @Test
     void rangerDefaultAttributes_levelOne_true(){
+        //Creating an instance of a character "attributeChecker" of playerClass RANGER, starting at level 1. Used to test character systems functionality.
         var attributeChecker = new Character();
         attributeChecker.setPlayerClass(RpgClassType.RANGER);
         attributeChecker.classAttributes(RpgClassType.RANGER, 1);
@@ -62,6 +67,7 @@ class CharacterTest {
     }
     @Test
     void rougeDefaultAttributes_levelOne_true(){
+        //Creating an instance of a character "attributeChecker" of playerClass ROGUE, starting at level 1. Used to test character systems functionality.
         var attributeChecker = new Character();
         attributeChecker.setPlayerClass(RpgClassType.ROGUE);
         attributeChecker.classAttributes(RpgClassType.ROGUE, 1);

@@ -49,7 +49,7 @@ public class Weapon extends Item {
 
     public double getDamagePerSecond() {
         return damagePerSecond;
-                //(getDamage()*getAttackSpeed());
+
     }
     public void setDamagePerSecond(double damage, double attackSpeed) {
 

@@ -5,7 +5,7 @@ import attributes.PrimaryAttributes;
 
 import java.util.HashMap;
 
-public class Character { //Initializes a character (Class type, level, equipment)
+public class Character {
     private int level;
     private RpgClassType rpgClassType;
     private PrimaryAttributes primary;
@@ -20,40 +20,40 @@ public class Character { //Initializes a character (Class type, level, equipment
 
 
         public Character(){
-            this.setLevel(1);
+            this.setLevel(1);//Initialize new instance of a character at level 1
         }
 
         public Character(RpgClassType rpgClassType, int level){
         this.setPlayerClass(rpgClassType);
-        this.setLevel(level); //Initializing character at level 1 unless stated otherwise
+        this.setLevel(level);
         this.setCharacterDps(getPrimary().getTotalPrimaryAttributes(), getWeaponDps());
         this.setCharacterDamageBonus(getPlayerClass());
 
     }
     //Initializes Attributes at lvl One based upon character rpg class
-
     PrimaryAttributes WARRIOR = new PrimaryAttributes(5,2,1,10);
     PrimaryAttributes MAGE = new  PrimaryAttributes(1,1,8,5);
     PrimaryAttributes RANGER = new  PrimaryAttributes(1,7,1,8);
     PrimaryAttributes ROUGE = new  PrimaryAttributes(2,6,1,8);
 
-    public String attributesToString(){// returns a string of primary and secondary attributes
+    // returns a string of primary and secondary attributes
+    public String attributesToString(){
         return "Strength: " + getPrimary().getStrength() +" Dexterity: " + getPrimary().getDexterity()
                 +" Intelligence: "+ getPrimary().getIntelligence() +" Vitality: "+ getPrimary().getVitality() +
-                " Health: "
-                + getHealth() +" Armor Rating: "+ getArmorRating()
+                " Health: " + getHealth() +" Armor Rating: "+ getArmorRating()
                 +" Elemental Resistance: " + getElementalResistance() + " Character Dps: " +getCharacterDps()
                 + " Level: " + getLevel();
 
     }
+    //sets secondary attributes based upon primary attributes
     public void setSecondaryAttributes(int vit, int str, int dex, int intl ){
         setHealth(vit*10);
         setArmorRating(str + dex);
         setElementalResistance(intl);
     }
 
-
-    public boolean equipArmor(Slot slot, Armor armor) throws InvalidArmorException { //Equips armor to specified slot on character, if allowed.
+    //Equips armor to specified slot on character, if allowed (within level requirements and acceptable player class type).
+    public boolean equipArmor(Slot slot, Armor armor) throws InvalidArmorException {
        try{
            if (armor.getLevelRequired() > getLevel()){
                   throw new InvalidArmorException("");
@@ -98,7 +98,9 @@ public class Character { //Initializes a character (Class type, level, equipment
 
 
     }
-    public void showArmor(Slot slot) {//shows armor in a specified slot
+    //shows armor in a specified slot, if slot is allowed
+    public void showArmor(Slot slot) {
+
         try {
             if (slot == Slot.HEAD) {
                 System.out.println(equippedArmor.get(Slot.HEAD).toString());
@@ -113,6 +115,7 @@ public class Character { //Initializes a character (Class type, level, equipment
         }
 
     }
+    //Equips weapon in specified slot, if that slot is legal, and the player class may equip a weapon of that type
     public  boolean equipWeapon(Slot slot, Weapon weapon) throws InvalidWeaponException {
 
         try{
@@ -131,14 +134,15 @@ public class Character { //Initializes a character (Class type, level, equipment
                     System.out.println("Weapon cannot be place in that slot.");
                 return false;
             }
-        //}catch (NullPointerException e){
         }catch(InvalidWeaponException e){
             throw new InvalidWeaponException("Invalid Weapon Selection, level requirement too high. Level required: " + weapon.getLevelRequired()
                     + ", current player level:  " + getLevel());
 
         }
-    }//equips a weapon if valid
-    public boolean weaponClassCheck(RpgClassType classType, WeaponType weapon){//checks if the weapon type being equipped is compatible with the current player class type
+    }
+    //checks if the weapon type being equipped is compatible with the current player class type
+    public boolean weaponClassCheck(RpgClassType classType, WeaponType weapon){
+
         if((weapon.equals(WeaponType.AXE) || weapon.equals(WeaponType.HAMMER)) && !classType.equals(RpgClassType.WARRIOR)){
             return false;
         }else if((weapon.equals(WeaponType.WAND) || weapon.equals(WeaponType.STAFF)) && !classType.equals(RpgClassType.MAGE)){
@@ -153,7 +157,9 @@ public class Character { //Initializes a character (Class type, level, equipment
             return true;
         }
     }
-    public boolean armorClassCheck(RpgClassType classType, ArmorType armor){// checks if the armor type being equipped is compatible with the current player class
+    // checks if the armor type being equipped is compatible with the current player class
+    public boolean armorClassCheck(RpgClassType classType, ArmorType armor){
+
         if(armor.equals(ArmorType.PLATE)  && !classType.equals(RpgClassType.WARRIOR)){
             return false;
         }else if(armor.equals(ArmorType.CLOTH) && !classType.equals(RpgClassType.MAGE)){
@@ -166,20 +172,25 @@ public class Character { //Initializes a character (Class type, level, equipment
             return true;
         }
     }
+    //Checks whether the player has a weapon equipped, returning a boolean
     public boolean hasWeaponEquipped(Slot slot){
+
         if (slot == null){
             return false;
         }return true;
     }
-    public void showWeapon(Slot slot){ //prints out information on the currently equipped weapon in the specified slot
+    //prints out information on the currently equipped weapon in the specified slot
+    public void showWeapon(Slot slot){
+
         if(!hasWeaponEquipped(Slot.WEAPON)){
             System.out.println("No weapon equipped.");
         }else if(slot == Slot.WEAPON){
             System.out.println(equippedWeapon.get(Slot.WEAPON).toString());
         }
 
-    }
-    public void levelUp(RpgClassType rpgClass, int levelUp) throws  IllegalArgumentException{//Increases the player level by int levelUp times, and raises primary attributes based upon class specifications
+    }//Increases the player level by "levelUp" times, and raises primary attributes, characterDps and secondary attributes based upon class specifications
+    public void levelUp(RpgClassType rpgClass, int levelUp) throws  IllegalArgumentException{
+
         try{
             if(levelUp < 1){
                 throw new IllegalArgumentException("Level increased cannot be zero or less.");
@@ -216,14 +227,14 @@ public class Character { //Initializes a character (Class type, level, equipment
         }
 
     }
-
+    //Initializes the players primary attributes, characterDps, and secondary attributes, based upon RpgClassType.
     public void setClassAttribute(PrimaryAttributes rpgClassAttributes){
         setPrimary(rpgClassAttributes);
-
         setSecondaryAttributes(getPrimary().getVitality(), getPrimary().getStrength(),getPrimary().getDexterity(),getPrimary().getIntelligence());
         setCharacterDps(getPrimary().getTotalPrimaryAttributes(), getWeaponDps());
     }
-    public void classAttributes(RpgClassType rpgClassType ,int level){//Sets class attributes based up class and level.
+    //Sets class attributes based upon class and level, with checks for illegal inputs.
+    public void classAttributes(RpgClassType rpgClassType ,int level){
         try{
             if(level < 1){
                 throw new IllegalArgumentException("Level increased cannot be zero or less.");
@@ -303,8 +314,8 @@ public class Character { //Initializes a character (Class type, level, equipment
     public double getCharacterDps() {
         return characterDps;
     }
-
-    public void setCharacterDps(double totalPrimary, double weaponDps) { //Sets the character dps based upon primary attributes and weapon dps
+    //Sets the character dps based upon primary attributes and weapon dps
+    public void setCharacterDps(double totalPrimary, double weaponDps) {
         if(!hasWeaponEquipped(Slot.WEAPON)){
             this.characterDps = 1;
         }else{
@@ -315,8 +326,8 @@ public class Character { //Initializes a character (Class type, level, equipment
     public double getCharacterDamageBonus() {
         return characterDamageBonus;
     }
-
-    public void setCharacterDamageBonus(RpgClassType rpgClass) {//Sets Character bonus damage in percent based upon the current player class
+    //Sets Character bonus damage in percent based upon the current player class
+    public void setCharacterDamageBonus(RpgClassType rpgClass) {
         if (rpgClass.equals(RpgClassType.WARRIOR)){
             this.characterDamageBonus = (double) getPrimary().getStrength() /100;
         }else if (rpgClass.equals(RpgClassType.MAGE)){
@@ -332,7 +343,7 @@ public class Character { //Initializes a character (Class type, level, equipment
     public double getWeaponDps() {
         return weaponDps;
     }
-
+    //Sets the weaponDps based upon the weaponDamage and weaponAttackSpeed
     public void setWeaponDps(double damage, double attackSpeed) {
         if(hasWeaponEquipped(Slot.WEAPON)){
             this.weaponDps = damage * attackSpeed;

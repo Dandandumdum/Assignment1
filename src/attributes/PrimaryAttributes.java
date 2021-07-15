@@ -54,7 +54,7 @@ public class PrimaryAttributes {
     public int getTotalPrimaryAttributes() {
         return totalPrimaryAttributes;
     }
-
+//Sets totalPrimaryAttributes to equal the sum of all primary attributes (Strength, dexterity, intelligence, vitality).
     public void setTotalPrimaryAttributes(int str, int dex, int intl ,int vit) {
         this.totalPrimaryAttributes = str+dex+vit+intl;
     }
